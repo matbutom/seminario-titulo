@@ -26,7 +26,7 @@
         id="user-form"
         style="display: none"
         method="POST"
-        action="https://script.google.com/macros/s/AKfycbwv3zp3ZRFv6xWfMpud2xxtOTojDTZAcAKSDDhsnX9W0d7jAmFLgZZ41bZGChW4g4-Z4Q/exec"
+        action="https://script.google.com/macros/s/AKfycbyNPMs6etB0aFsHoHxSKYKHjxRo8OJPj6iUxMPYuwPWgdCP2cWElOwRz_mI04BBgunIsg/exec"
         target="hidden_iframe"
       >
         <h2>Introduce tus datos</h2>
@@ -43,27 +43,43 @@
 
   <!-- Contenido principal del test -->
   <div id="phase-1">
-  <h2>Parte 1: Evaluación perceptiva de Tipografías</h2>
-  <p class="description">
-    En esta primera sección del test, se te presentarán diferentes tipografías utilizadas para mostrar una misma frase. Debes evaluar la carga ideológica que personalmente crees que transmite cada una de ellas. Para ello, deberás usar la barra inferior y ubicar tu percepción.
-  </p>
+    <h2>Parte 1: Evaluación perceptiva de Tipografías</h2>
+    <p class="description">
+      En esta primera sección del test, se te presentarán diferentes tipografías utilizadas para mostrar una misma frase. Debes evaluar la carga ideológica que personalmente crees que transmite cada tipografía. Para ello, deberás usar la barra inferior y ubicar tu percepción.
+    </p>
 
-  <div id="typography-test">
-    <p id="test-phrase" class="font-times">The quick brown fox jumps over the lazy dog</p>
+    <div id="typography-test">
+      <p id="test-phrase" class="font-times">The quick brown fox jumps over the lazy dog</p>
 
-    <input type="range" id="ideology-slider" min="0" max="5" step="1" value="2" />
-    <div class="slider-labels">
-      <span>Extrema izquierda</span>
-      <span>Izquierda</span>
-      <span>Centro izquierda</span>
-      <span>Centro derecha</span>
-      <span>Derecha</span>
-      <span>Extrema derecha</span>
+      <input type="range" id="ideology-slider" min="0" max="5" step="1" value="2" />
+      <div class="slider-labels">
+        <span>Extrema izquierda</span>
+        <span>Izquierda</span>
+        <span>Centro izquierda</span>
+        <span>Centro derecha</span>
+        <span>Derecha</span>
+        <span>Extrema derecha</span>
+      </div>
+
+      <button id="next-font-btn">Siguiente tipografía</button>
     </div>
-
-    <button id="next-font-btn">Siguiente tipografía</button>
   </div>
-</div>
+
+  <!-- Formulario oculto para enviar datos de tipografías -->
+  <form
+    id="tipografia-form"
+    method="POST"
+    action="https://script.google.com/macros/s/AKfycbyNPMs6etB0aFsHoHxSKYKHjxRo8OJPj6iUxMPYuwPWgdCP2cWElOwRz_mI04BBgunIsg/exec"
+    target="hidden_iframe"
+    style="display:none;"
+  >
+    <input type="hidden" id="tipografia-edad" name="edad" />
+    <input type="hidden" id="tipografia-ciudad" name="ciudad" />
+    <input type="hidden" id="tipografia-comuna" name="comuna" />
+    <input type="hidden" id="tipografia-tipografia" name="tipografia" />
+    <input type="hidden" id="tipografia-valor" name="valor" />
+  </form>
+
   <script src="script.js"></script>
 </body>
 </html>

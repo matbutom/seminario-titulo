@@ -5,18 +5,24 @@ document.addEventListener("DOMContentLoaded", () => {
   const overlay = document.getElementById("intro-overlay");
   const mainContent = document.getElementById("phase-1");
 
-  // Verificar si ya se ingresaron datos anteriormente
+  // Control tipografías
+  const phrase = document.getElementById("test-phrase");
+  const nextFontBtn = document.getElementById("next-font-btn");
+
+  const fonts = ["font-times", "font-alegreya", "font-impact", "font-ubuntu"];
+  let currentFont = 0;
+
+  // Comprobar si datos básicos ya completados
   const datosGuardados = localStorage.getItem("datosCompletados");
 
   if (datosGuardados === "true") {
-    // Omitir overlay y mostrar contenido principal
     if (overlay) overlay.style.display = "none";
     if (mainContent) mainContent.style.display = "block";
   } else {
     if (mainContent) mainContent.style.display = "none";
   }
 
-  // Mostrar formulario al hacer click en "Comenzar"
+  // Mostrar formulario básico al hacer click en "Comenzar"
   if (startBtn && introStep && userForm) {
     startBtn.addEventListener("click", () => {
       introStep.style.display = "none";
@@ -24,9 +30,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Al enviar formulario, ocultar overlay y mostrar test luego de enviar datos (sin recarga)
+  // Al enviar formulario básico, guardar datos y ocultar overlay
   if (userForm) {
-    userForm.addEventListener("submit", () => {
+    userForm.addEventListener("submit", (e) => {
+      e.preventDefault(); // evitar recarga
+      // Guardar datos para usarlos luego en formulario tipografías
+      localStorage.setItem("edad", document.getElementById("edad").value);
+      localStorage.setItem("ciudad", document.getElementById("ciudad").value);
+      localStorage.setItem("comuna", document.getElementById("comuna").value);
+
+      // Enviar el formulario (aún sigue el target iframe para no recargar)
+      userForm.submit();
+
       setTimeout(() => {
         localStorage.setItem("datosCompletados", "true");
         if (overlay) overlay.style.display = "none";
@@ -35,18 +50,28 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Control de cambio de tipografía
-  const phrase = document.getElementById("test-phrase");
-  const nextFontBtn = document.getElementById("next-font-btn");
-
-  const fonts = ["font-times", "font-alegreya", "font-impact", "font-ubuntu"];
-  let currentFont = 0;
-
+  // Control del botón siguiente tipografía
   if (nextFontBtn && phrase) {
     nextFontBtn.addEventListener("click", () => {
       const sliderValue = document.getElementById("ideology-slider")?.value;
-      console.log("Respuesta para " + fonts[currentFont] + ": " + sliderValue);
+      const currentFontName = fonts[currentFont];
 
+      // Obtener datos básicos guardados
+      const edad = localStorage.getItem("edad") || "";
+      const ciudad = localStorage.getItem("ciudad") || "";
+      const comuna = localStorage.getItem("comuna") || "";
+
+      // Rellenar formulario oculto para tipografías
+      document.getElementById("tipografia-edad").value = edad;
+      document.getElementById("tipografia-ciudad").value = ciudad;
+      document.getElementById("tipografia-comuna").value = comuna;
+      document.getElementById("tipografia-tipografia").value = currentFontName;
+      document.getElementById("tipografia-valor").value = sliderValue;
+
+      // Enviar formulario oculto sin recargar
+      document.getElementById("tipografia-form").submit();
+
+      // Avanzar a la siguiente tipografía
       currentFont++;
       if (currentFont >= fonts.length) {
         nextFontBtn.disabled = true;
@@ -54,6 +79,8 @@ document.addEventListener("DOMContentLoaded", () => {
         phrase.className = "";
       } else {
         phrase.className = fonts[currentFont];
+        // Opcional: resetear slider a valor medio
+        document.getElementById("ideology-slider").value = 2;
       }
     });
   }
