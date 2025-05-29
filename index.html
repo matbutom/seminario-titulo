@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Test de Percepción Tipográfica</title>
   <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Alegreya&family=Ubuntu&display=swap" rel="stylesheet" />
 </head>
 <body>
 
@@ -41,12 +42,28 @@
   <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
 
   <!-- Contenido principal del test -->
-  <div id="main-content" style="display: none;">
-    <h2>¡Bienvenido al test!</h2>
-    <p>Aquí aparecerán las frases con distintas tipografías para que las evalúes.</p>
-    <!-- Aquí agregaremos las preguntas dinámicamente -->
-  </div>
+  <div id="phase-1">
+  <h2>Parte 1: Evaluación perceptiva de Tipografías</h2>
+  <p class="description">
+    En esta primera sección del test, se te presentarán diferentes tipografías utilizadas para mostrar una misma frase. Debes evaluar la carga ideológica que personalmente crees que transmite cada una de ellas. Para ello, deberás usar la barra inferior y ubicar tu percepción.
+  </p>
 
+  <div id="typography-test">
+    <p id="test-phrase" class="font-times">The quick brown fox jumps over the lazy dog</p>
+
+    <input type="range" id="ideology-slider" min="0" max="5" step="1" value="2" />
+    <div class="slider-labels">
+      <span>Extrema izquierda</span>
+      <span>Izquierda</span>
+      <span>Centro izquierda</span>
+      <span>Centro derecha</span>
+      <span>Derecha</span>
+      <span>Extrema derecha</span>
+    </div>
+
+    <button id="next-font-btn">Siguiente tipografía</button>
+  </div>
+</div>
   <script src="script.js"></script>
 </body>
 </html>

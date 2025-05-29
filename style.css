@@ -1,62 +1,60 @@
 body {
-  font-family: 'Helvetica', 'Arial', sans-serif;
+  font-family: "Helvetica", "Arial", sans-serif;
   margin: 0;
   background: #f9f9f9;
 }
 
-/* Overlay general */
 .overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0,0,0,0.7);
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  padding: 1rem; /* para no pegarse a los bordes en pantallas pequeñas */
+  padding: 16px;
   box-sizing: border-box;
 }
 
-/* Contenido del overlay */
 .overlay-content {
   background-color: #ffffff;
-  padding: 2.5rem 2rem;
-  max-width: 380px;
+  padding: 60px 32px;
+  max-width: 500px;
   width: 100%;
   text-align: center;
   border-radius: 12px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 100px;
   box-sizing: border-box;
 }
 
 .overlay-content h1 {
-  font-size: 1.9rem;
-  margin: 0;
+  font-size: 30px;
+  margin: 0 0 40px 0;
 }
 
 .overlay-content h2 {
-  font-size: 1.6rem;
-  margin: 0 0 0.8rem 0;
+  font-size: 26px;
+  margin: 0 0 12px 0;
   font-weight: 600;
 }
 
 .overlay-content p {
-  font-size: 1.1rem;
-  line-height: 1.4;
-  margin: 0;
+  font-size: 18px;
+  line-height: 22px;
+  margin: 0 0 40px 0;
   color: #333;
 }
 
 input[type="number"],
 input[type="text"] {
-  padding: 0.7rem 1rem;
-  font-size: 1rem;
+  padding: 14px 18px;
+  font-size: 16px;
   border: 1.8px solid #ccc;
   border-radius: 8px;
   width: 100%;
@@ -70,16 +68,17 @@ input[type="text"]:focus {
   outline: none;
 }
 
-#start-btn, #submit-form-btn {
+#start-btn,
+#submit-form-btn {
   background-color: #000;
   color: #fff;
-  padding: 0.85rem 1.6rem;
-  font-size: 1.05rem;
+  padding: 14px 24px;
+  font-size: 20px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  font-weight: 600;
+  font-weight: 500;
   user-select: none;
 }
 
@@ -88,17 +87,92 @@ input[type="text"]:focus {
   background-color: #444;
 }
 
-#main-content {
-  max-width: 720px;
-  margin: 3rem auto;
-  padding: 1rem;
-  font-family: 'Helvetica', 'Arial', sans-serif;
-  color: #222;
-}
 #user-form {
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
-  margin-top: 1rem;
+  gap: 22px;
+  margin-top: 16px;
 }
 
+#main-content {
+  max-width: 720px;
+  margin: 48px auto;
+  padding: 16px;
+  font-family: "Helvetica", "Arial", sans-serif;
+  color: #222;
+}
+#phase-1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* <--- alinea al centro */
+  gap: 24px;
+  text-align: center;
+  margin-top: 70px;
+}
+
+.description {
+  font-size: 18px;
+  font-weight: 4    00;
+  color: #333;
+  max-width: 750px;
+  margin: 30px auto;
+  margin-top: 30px;
+}
+
+#test-phrase {
+  font-size: 45px;
+  margin: 50px 0;
+  margin-top: 50px;
+  min-height: 60px;
+}
+
+#ideology-slider {
+  width: 100%;
+  max-width: 490px;
+  margin: 40px auto; /* quita el margin-top alto */
+  display: block;
+}
+
+.slider-labels {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  font-size: 0.95rem;
+  color: #333;
+  width: 100%;
+  max-width: 550px;
+  margin: 20px auto 0 auto;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+#next-font-btn {
+  background-color: #000;
+  color: #fff;
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 100px;
+  transition: background-color 0.3s ease;
+}
+
+#next-font-btn:hover {
+  background-color: #333;
+}
+
+.font-times {
+  font-family: "Times New Roman", serif;
+}
+
+.font-alegreya {
+  font-family: "Alegreya", serif;
+}
+
+.font-impact {
+  font-family: Impact, Charcoal, sans-serif;
+}
+
+.font-ubuntu {
+  font-family: "Ubuntu", sans-serif;
+}
