@@ -5,36 +5,22 @@ document.addEventListener("DOMContentLoaded", function () {
   const overlay = document.getElementById("intro-overlay");
   const mainContent = document.getElementById("main-content");
 
-  // Al hacer clic en "Comenzar", mostrar el formulario
+  // Mostrar formulario cuando se hace click en "Comenzar"
   startBtn.addEventListener("click", function () {
     introStep.style.display = "none";
     userForm.style.display = "flex";
   });
 
-  // Al enviar el formulario, enviamos datos a Google Sheets, luego mostramos test
+  // Al enviar el formulario
   userForm.addEventListener("submit", function (e) {
-    e.preventDefault();
+    // No e.preventDefault(), dejamos que el formulario se envíe normalmente al iframe oculto
 
-    const edad = document.getElementById("edad").value;
-    const ciudad = document.getElementById("ciudad").value;
-    const comuna = document.getElementById("comuna").value;
+    // Opcional: aquí puedes poner un mensaje "Enviando..."
 
-    fetch("https://script.google.com/macros/s/AKfycbx5ePerxHWu7X8XgYJtidoB9IWBXzJ00DeR8sWWw0EeSR_avrtNo7gc8B0_S-siBZG6_Q/exec", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ edad, ciudad, comuna })
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log("Respuesta del servidor:", data);
+    // Esperamos un poco y luego ocultamos overlay y mostramos el test
+    setTimeout(() => {
       overlay.style.display = "none";
       mainContent.style.display = "block";
-    })
-    .catch(error => {
-      console.error("Error enviando datos:", error);
-      alert("Hubo un error enviando tus datos. Por favor intenta de nuevo.");
-    });
+    }, 500);
   });
 });

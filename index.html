@@ -22,33 +22,41 @@
         </div>
 
         <!-- Paso 2: Formulario -->
-        <form id="user-form" style="display: none">
-          <h2>Introduce tus datos</h2>
-          <input
-            type="number"
-            id="edad"
-            name="edad"
-            placeholder="Edad"
-            required
-          />
-          <input
-            type="text"
-            id="ciudad"
-            name="ciudad"
-            placeholder="Ciudad"
-            required
-          />
-          <input
-            type="text"
-            id="comuna"
-            name="comuna"
-            placeholder="Comuna"
-            required
-          />
-          <button type="submit" id="submit-form-btn">Continuar</button>
-        </form>
-      </div>
-    </div>
+<form
+  id="user-form"
+  style="display: none"
+  method="POST"
+  action="https://script.google.com/macros/s/AKfycbx5ePerxHWu7X8XgYJtidoB9IWBXzJ00DeR8sWWw0EeSR_avrtNo7gc8B0_S-siBZG6_Q/exec"
+  target="hidden_iframe"
+>
+  <h2>Introduce tus datos</h2>
+  <input
+    type="number"
+    id="edad"
+    name="edad"
+    placeholder="Edad"
+    required
+  />
+  <input
+    type="text"
+    id="ciudad"
+    name="ciudad"
+    placeholder="Ciudad"
+    required
+  />
+  <input
+    type="text"
+    id="comuna"
+    name="comuna"
+    placeholder="Comuna"
+    required
+  />
+  <button type="submit" id="submit-form-btn">Continuar</button>
+</form>
+
+<!-- iframe oculto para enviar el formulario sin recargar -->
+<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
 
     <!-- Contenido principal del test -->
     <div id="main-content" style="display: none">
