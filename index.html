@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test de Percepción Tipográfica</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Overlay de introducción -->
+    <div id="intro-overlay" class="overlay">
+      <div class="overlay-content">
+        <!-- Paso 1: Introducción -->
+        <div id="intro-step">
+          <h1>Test de Percepción Tipográfica</h1>
+          <p>
+            Este test explora cómo distintas tipografías influyen en la
+            percepción ideológica de la sociedad chilena. Muchas gracias por tu
+            participación.
+          </p>
+          <button id="start-btn">Comenzar</button>
+        </div>
+
+        <!-- Paso 2: Formulario -->
+        <form id="user-form" style="display: none">
+          <h2>Introduce tus datos</h2>
+          <input
+            type="number"
+            id="edad"
+            name="edad"
+            placeholder="Edad"
+            required
+          />
+          <input
+            type="text"
+            id="ciudad"
+            name="ciudad"
+            placeholder="Ciudad"
+            required
+          />
+          <input
+            type="text"
+            id="comuna"
+            name="comuna"
+            placeholder="Comuna"
+            required
+          />
+          <button type="submit" id="submit-form-btn">Continuar</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Contenido principal del test -->
+    <div id="main-content" style="display: none">
+      <h2>¡Bienvenido al test!</h2>
+      <p>
+        Aquí aparecerán las frases con distintas tipografías para que las
+        evalúes.
+      </p>
+      <!-- Aquí iremos agregando las preguntas dinámicamente -->
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
