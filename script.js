@@ -8,7 +8,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const phrase = document.getElementById("test-phrase");
   const nextFontBtn = document.getElementById("next-font-btn");
 
-  const fonts = ["font-times", "font-alegreya", "font-impact", "font-ubuntu"];
+  const fonts = [
+  "font-times",
+  "font-alegreya",
+  "font-impact",
+  "font-ubuntu",
+  "font-kapakana",
+  "font-spacemono",
+  "font-rowdies"
+];
   let currentFont = 0;
 
   // Comprobar si datos básicos ya completados
