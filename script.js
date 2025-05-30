@@ -1,20 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
   const startBtn = document.getElementById("start-btn");
   const introStep = document.getElementById("intro-step");
-  const userForm = document.getElementById("user-form");
   const overlay = document.getElementById("intro-overlay");
   const mainContent = document.getElementById("phase-1");
 
-  // Control tipografías
   const phrase = document.getElementById("test-phrase");
   const nextFontBtn = document.getElementById("next-font-btn");
 
   const fonts = ["font-times", "font-alegreya", "font-impact", "font-ubuntu"];
   let currentFont = 0;
 
-  // Comprobar si datos básicos ya completados
+  // Mostrar contenido principal si datos ya completados
   const datosGuardados = localStorage.getItem("datosCompletados");
-
   if (datosGuardados === "true") {
     if (overlay) overlay.style.display = "none";
     if (mainContent) mainContent.style.display = "block";
@@ -22,65 +19,106 @@ document.addEventListener("DOMContentLoaded", () => {
     if (mainContent) mainContent.style.display = "none";
   }
 
-  // Mostrar formulario básico al hacer click en "Comenzar"
-  if (startBtn && introStep && userForm) {
+  // Evento click para mostrar formulario básico
+  if (startBtn && introStep) {
     startBtn.addEventListener("click", () => {
       introStep.style.display = "none";
-      userForm.style.display = "flex";
+      mostrarFormularioBasico();
     });
   }
 
-  // Al enviar formulario básico, guardar datos y ocultar overlay
-  if (userForm) {
-    userForm.addEventListener("submit", (e) => {
-      e.preventDefault(); // evitar recarga
-      // Guardar datos para usarlos luego en formulario tipografías
-      localStorage.setItem("edad", document.getElementById("edad").value);
-      localStorage.setItem("ciudad", document.getElementById("ciudad").value);
-      localStorage.setItem("comuna", document.getElementById("comuna").value);
+  function mostrarFormularioBasico() {
+    // Crear formulario básico dinámicamente para controlar el envío con fetch
+    const form = document.createElement("form");
+    form.id = "user-form";
 
-      // Enviar el formulario (aún sigue el target iframe para no recargar)
-      userForm.submit();
+    form.innerHTML = `
+      <h2>Introduce tus datos</h2>
+      <input type="number" id="edad" name="edad" placeholder="Edad" required />
+      <input type="text" id="ciudad" name="ciudad" placeholder="Ciudad" required />
+      <input type="text" id="comuna" name="comuna" placeholder="Comuna" required />
+      <button type="submit" id="submit-form-btn">Continuar</button>
+    `;
 
-      setTimeout(() => {
-        localStorage.setItem("datosCompletados", "true");
-        if (overlay) overlay.style.display = "none";
-        if (mainContent) mainContent.style.display = "block";
-      }, 500);
+    introStep.appendChild(form);
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const data = {
+        edad: form.edad.value,
+        ciudad: form.ciudad.value,
+        comuna: form.comuna.value,
+      };
+
+      try {
+        const response = await fetch("https://script.google.com/macros/s/AKfycbxCjeegKbycaLixcozWkYyfKJdOF07jN1zRzJqnf6cliNLnXhHtPIR5N2aYExjOTjywnw/exec", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+
+        if (result.result === "success") {
+          localStorage.setItem("edad", data.edad);
+          localStorage.setItem("ciudad", data.ciudad);
+          localStorage.setItem("comuna", data.comuna);
+          localStorage.setItem("datosCompletados", "true");
+
+          if (overlay) overlay.style.display = "none";
+          if (mainContent) mainContent.style.display = "block";
+        } else {
+          alert("Error al enviar los datos: " + result.message);
+        }
+      } catch (error) {
+        alert("Error al enviar los datos: " + error);
+      }
     });
   }
 
-  // Control del botón siguiente tipografía
+  // Manejar el botón siguiente tipografía
   if (nextFontBtn && phrase) {
-    nextFontBtn.addEventListener("click", () => {
-      const sliderValue = document.getElementById("ideology-slider")?.value;
+    nextFontBtn.addEventListener("click", async () => {
+      const sliderValue = document.getElementById("ideology-slider").value;
       const currentFontName = fonts[currentFont];
 
-      // Obtener datos básicos guardados
-      const edad = localStorage.getItem("edad") || "";
-      const ciudad = localStorage.getItem("ciudad") || "";
-      const comuna = localStorage.getItem("comuna") || "";
+      const data = {
+        edad: localStorage.getItem("edad") || "",
+        ciudad: localStorage.getItem("ciudad") || "",
+        comuna: localStorage.getItem("comuna") || "",
+        tipografia: currentFontName,
+        valor: sliderValue,
+      };
 
-      // Rellenar formulario oculto para tipografías
-      document.getElementById("tipografia-edad").value = edad;
-      document.getElementById("tipografia-ciudad").value = ciudad;
-      document.getElementById("tipografia-comuna").value = comuna;
-      document.getElementById("tipografia-tipografia").value = currentFontName;
-      document.getElementById("tipografia-valor").value = sliderValue;
+      try {
+        const response = await fetch("https://script.google.com/macros/s/AKfycbxCjeegKbycaLixcozWkYyfKJdOF07jN1zRzJqnf6cliNLnXhHtPIR5N2aYExjOTjywnw/exec", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
 
-      // Enviar formulario oculto sin recargar
-      document.getElementById("tipografia-form").submit();
+        const result = await response.json();
 
-      // Avanzar a la siguiente tipografía
-      currentFont++;
-      if (currentFont >= fonts.length) {
-        nextFontBtn.disabled = true;
-        phrase.textContent = "¡Gracias por completar esta sección!";
-        phrase.className = "";
-      } else {
-        phrase.className = fonts[currentFont];
-        // Opcional: resetear slider a valor medio
-        document.getElementById("ideology-slider").value = 2;
+        if (result.result === "success") {
+          currentFont++;
+          if (currentFont >= fonts.length) {
+            nextFontBtn.disabled = true;
+            phrase.textContent = "¡Gracias por completar esta sección!";
+            phrase.className = "";
+          } else {
+            phrase.className = fonts[currentFont];
+            document.getElementById("ideology-slider").value = 2;
+          }
+        } else {
+          alert("Error al enviar los datos: " + result.message);
+        }
+      } catch (error) {
+        alert("Error al enviar los datos: " + error);
       }
     });
   }

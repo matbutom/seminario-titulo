@@ -27,7 +27,6 @@
         style="display: none"
         method="POST"
         action="https://script.google.com/macros/s/AKfycbyNPMs6etB0aFsHoHxSKYKHjxRo8OJPj6iUxMPYuwPWgdCP2cWElOwRz_mI04BBgunIsg/exec"
-        target="hidden_iframe"
       >
         <h2>Introduce tus datos</h2>
         <input type="number" id="edad" name="edad" placeholder="Edad" required />
@@ -37,9 +36,6 @@
       </form>
     </div>
   </div>
-
-  <!-- iframe oculto para enviar el formulario sin recargar -->
-  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
 
   <!-- Contenido principal del test -->
   <div id="phase-1">
@@ -64,21 +60,6 @@
       <button id="next-font-btn">Siguiente tipografía</button>
     </div>
   </div>
-
-  <!-- Formulario oculto para enviar datos de tipografías -->
-  <form
-    id="tipografia-form"
-    method="POST"
-    action="https://script.google.com/macros/s/AKfycbyNPMs6etB0aFsHoHxSKYKHjxRo8OJPj6iUxMPYuwPWgdCP2cWElOwRz_mI04BBgunIsg/exec"
-    target="hidden_iframe"
-    style="display:none;"
-  >
-    <input type="hidden" id="tipografia-edad" name="edad" />
-    <input type="hidden" id="tipografia-ciudad" name="ciudad" />
-    <input type="hidden" id="tipografia-comuna" name="comuna" />
-    <input type="hidden" id="tipografia-tipografia" name="tipografia" />
-    <input type="hidden" id="tipografia-valor" name="valor" />
-  </form>
 
   <script src="script.js"></script>
 </body>
