@@ -21,12 +21,13 @@
         <button id="start-btn">Comenzar</button>
       </div>
 
-      <!-- Paso 2: Formulario -->
+      <!-- Paso 2: Formulario datos básicos -->
       <form
         id="user-form"
         style="display: none"
         method="POST"
-        action="https://script.google.com/macros/s/AKfycbyNPMs6etB0aFsHoHxSKYKHjxRo8OJPj6iUxMPYuwPWgdCP2cWElOwRz_mI04BBgunIsg/exec"
+        action="https://script.google.com/macros/s/AKfycbxCjeegKbycaLixcozWkYyfKJdOF07jN1zRzJqnf6cliNLnXhHtPIR5N2aYExjOTjywnw/exec"
+        target="hidden_iframe"
       >
         <h2>Introduce tus datos</h2>
         <input type="number" id="edad" name="edad" placeholder="Edad" required />
@@ -37,8 +38,11 @@
     </div>
   </div>
 
+  <!-- iframe oculto para enviar el formulario sin recargar -->
+  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
   <!-- Contenido principal del test -->
-  <div id="phase-1">
+  <div id="phase-1" style="display:none;">
     <h2>Parte 1: Evaluación perceptiva de Tipografías</h2>
     <p class="description">
       En esta primera sección del test, se te presentarán diferentes tipografías utilizadas para mostrar una misma frase. Debes evaluar la carga ideológica que personalmente crees que transmite cada tipografía. Para ello, deberás usar la barra inferior y ubicar tu percepción.
@@ -60,6 +64,21 @@
       <button id="next-font-btn">Siguiente tipografía</button>
     </div>
   </div>
+
+  <!-- Formulario oculto para enviar datos de tipografías -->
+  <form
+    id="tipografia-form"
+    method="POST"
+    action="https://script.google.com/macros/s/AKfycbxCjeegKbycaLixcozWkYyfKJdOF07jN1zRzJqnf6cliNLnXhHtPIR5N2aYExjOTjywnw/exec"
+    target="hidden_iframe"
+    style="display:none;"
+  >
+    <input type="hidden" id="tipografia-edad" name="edad" />
+    <input type="hidden" id="tipografia-ciudad" name="ciudad" />
+    <input type="hidden" id="tipografia-comuna" name="comuna" />
+    <input type="hidden" id="tipografia-tipografia" name="tipografia" />
+    <input type="hidden" id="tipografia-valor" name="valor" />
+  </form>
 
   <script src="script.js"></script>
 </body>

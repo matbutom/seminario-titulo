@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const startBtn = document.getElementById("start-btn");
   const introStep = document.getElementById("intro-step");
+  const userForm = document.getElementById("user-form");
   const overlay = document.getElementById("intro-overlay");
   const mainContent = document.getElementById("phase-1");
 
@@ -10,8 +11,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const fonts = ["font-times", "font-alegreya", "font-impact", "font-ubuntu"];
   let currentFont = 0;
 
-  // Mostrar contenido principal si datos ya completados
+  // Comprobar si datos básicos ya completados
   const datosGuardados = localStorage.getItem("datosCompletados");
+
   if (datosGuardados === "true") {
     if (overlay) overlay.style.display = "none";
     if (mainContent) mainContent.style.display = "block";
@@ -19,106 +21,58 @@ document.addEventListener("DOMContentLoaded", () => {
     if (mainContent) mainContent.style.display = "none";
   }
 
-  // Evento click para mostrar formulario básico
-  if (startBtn && introStep) {
+  // Mostrar formulario básico al hacer click en "Comenzar"
+  if (startBtn && introStep && userForm) {
     startBtn.addEventListener("click", () => {
       introStep.style.display = "none";
-      mostrarFormularioBasico();
+      userForm.style.display = "flex";
     });
   }
 
-  function mostrarFormularioBasico() {
-    // Crear formulario básico dinámicamente para controlar el envío con fetch
-    const form = document.createElement("form");
-    form.id = "user-form";
+  // Al enviar formulario básico, guardar datos y ocultar overlay
+  if (userForm) {
+    userForm.addEventListener("submit", () => {
+      localStorage.setItem("edad", document.getElementById("edad").value);
+      localStorage.setItem("ciudad", document.getElementById("ciudad").value);
+      localStorage.setItem("comuna", document.getElementById("comuna").value);
 
-    form.innerHTML = `
-      <h2>Introduce tus datos</h2>
-      <input type="number" id="edad" name="edad" placeholder="Edad" required />
-      <input type="text" id="ciudad" name="ciudad" placeholder="Ciudad" required />
-      <input type="text" id="comuna" name="comuna" placeholder="Comuna" required />
-      <button type="submit" id="submit-form-btn">Continuar</button>
-    `;
-
-    introStep.appendChild(form);
-
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
-
-      const data = {
-        edad: form.edad.value,
-        ciudad: form.ciudad.value,
-        comuna: form.comuna.value,
-      };
-
-      try {
-        const response = await fetch("https://script.google.com/macros/s/AKfycbxCjeegKbycaLixcozWkYyfKJdOF07jN1zRzJqnf6cliNLnXhHtPIR5N2aYExjOTjywnw/exec", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
-
-        const result = await response.json();
-
-        if (result.result === "success") {
-          localStorage.setItem("edad", data.edad);
-          localStorage.setItem("ciudad", data.ciudad);
-          localStorage.setItem("comuna", data.comuna);
-          localStorage.setItem("datosCompletados", "true");
-
-          if (overlay) overlay.style.display = "none";
-          if (mainContent) mainContent.style.display = "block";
-        } else {
-          alert("Error al enviar los datos: " + result.message);
-        }
-      } catch (error) {
-        alert("Error al enviar los datos: " + error);
-      }
+      setTimeout(() => {
+        localStorage.setItem("datosCompletados", "true");
+        if (overlay) overlay.style.display = "none";
+        if (mainContent) mainContent.style.display = "block";
+      }, 500);
     });
   }
 
-  // Manejar el botón siguiente tipografía
+  // Control del botón siguiente tipografía
   if (nextFontBtn && phrase) {
-    nextFontBtn.addEventListener("click", async () => {
+    nextFontBtn.addEventListener("click", () => {
       const sliderValue = document.getElementById("ideology-slider").value;
       const currentFontName = fonts[currentFont];
 
-      const data = {
-        edad: localStorage.getItem("edad") || "",
-        ciudad: localStorage.getItem("ciudad") || "",
-        comuna: localStorage.getItem("comuna") || "",
-        tipografia: currentFontName,
-        valor: sliderValue,
-      };
+      const edad = localStorage.getItem("edad") || "";
+      const ciudad = localStorage.getItem("ciudad") || "";
+      const comuna = localStorage.getItem("comuna") || "";
 
-      try {
-        const response = await fetch("https://script.google.com/macros/s/AKfycbxCjeegKbycaLixcozWkYyfKJdOF07jN1zRzJqnf6cliNLnXhHtPIR5N2aYExjOTjywnw/exec", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
+      // Rellenar formulario oculto
+      document.getElementById("tipografia-edad").value = edad;
+      document.getElementById("tipografia-ciudad").value = ciudad;
+      document.getElementById("tipografia-comuna").value = comuna;
+      document.getElementById("tipografia-tipografia").value = currentFontName;
+      document.getElementById("tipografia-valor").value = sliderValue;
 
-        const result = await response.json();
+      // Enviar formulario oculto (no recarga la página)
+      document.getElementById("tipografia-form").submit();
 
-        if (result.result === "success") {
-          currentFont++;
-          if (currentFont >= fonts.length) {
-            nextFontBtn.disabled = true;
-            phrase.textContent = "¡Gracias por completar esta sección!";
-            phrase.className = "";
-          } else {
-            phrase.className = fonts[currentFont];
-            document.getElementById("ideology-slider").value = 2;
-          }
-        } else {
-          alert("Error al enviar los datos: " + result.message);
-        }
-      } catch (error) {
-        alert("Error al enviar los datos: " + error);
+      // Avanzar a siguiente tipografía
+      currentFont++;
+      if (currentFont >= fonts.length) {
+        nextFontBtn.disabled = true;
+        phrase.textContent = "¡Gracias por completar esta sección!";
+        phrase.className = "";
+      } else {
+        phrase.className = fonts[currentFont];
+        document.getElementById("ideology-slider").value = 2;
       }
     });
   }
